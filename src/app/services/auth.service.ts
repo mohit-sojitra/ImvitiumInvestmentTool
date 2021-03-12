@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserModel } from '../interfaces/user.model';
 import { catchError, tap } from 'rxjs/operators';
 import {  LoginModel } from '../interfaces/login.model';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

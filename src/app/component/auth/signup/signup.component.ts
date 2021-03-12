@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UserModel } from 'src/app/interfaces/user.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { UserModel } from '../../../../app/interfaces/user.model';
+import { AuthService } from '../../../../app/services/auth.service';
 
 @Component({
   selector: 'app-signup',

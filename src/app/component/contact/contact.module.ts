@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ContactComponent } from './contact.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AboutComponent } from '../about/about.component';
+
 @NgModule({
   declarations: [ContactComponent],
   imports: [
