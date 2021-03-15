@@ -1,6 +1,9 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { userlist, UserListModel } from '../interfaces/userlist.model';
-import { AdminService } from '../services/admin.service';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { newsModel } from 'src/app/interfaces/news.model';
+import { NotificationService } from 'src/app/services/notification.service';
+import { userlist, UserListModel } from '../../interfaces/userlist.model';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,19 +11,50 @@ import { AdminService } from '../services/admin.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  ind: number = -1;
+  newsArray: FormArray;
+  newsForm: FormGroup;
   searchData: string = '';
   userList: userlist[];
   usersData: UserListModel;
   numberOfPages: number;
   currentPage: number = 1;
   accountType: string = 'all';
-  constructor(private adminService: AdminService) {}
+  newsList: newsModel[] = [];
+  youtubeLink: string;
+  constructor(
+    private adminService: AdminService,
+    private NottificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
+    this.initform();
+    this.adminService.getYoutubeLink().subscribe((res) => {
+      console.log(res);
+      this.youtubeLink = res;
+    });
     this.adminService.getUserlist(1, '').subscribe((res) => {
       this.numberOfPages = res.data.last_page;
       this.userList = res.data.data;
-      // console.log(res.data.data[0].email);
+    });
+    this.adminService.getUpdates().subscribe((res) => {
+      this.newsList = res;
+      for (let news of res) {
+        this.newsArray.push(
+          new FormGroup({
+            updates: new FormControl(
+              { value: news.news_update, disabled: true },
+              Validators.required
+            ),
+          })
+        );
+      }
+    });
+  }
+
+  updateYoutubeLink() {
+    this.adminService.setYoutubeLink(this.youtubeLink).subscribe((res) => {
+      console.log(res);
     });
   }
 
@@ -124,5 +158,90 @@ export class AdminComponent implements OnInit {
           this.userList = res.data.data;
         });
     }
+  }
+
+  onEdit(i) {
+    // this.ind = i;
+    if (i >= this.newsList.length) {
+      this.adminService
+        .addUpdates(this.newsArray.controls[i].value['updates'])
+        .subscribe(
+          (res) => {
+            this.newsArray.controls[i].disable();
+            console.log(res);
+          },
+          (error) => {
+            this.NottificationService.showError(
+              'Something went wrong',
+              'Please try again'
+            );
+          }
+        );
+    } else if (this.newsArray.controls[i].disabled) {
+      this.newsArray.controls[i].enable();
+    } else {
+      this.adminService
+        .updateUpdates(
+          this.newsList[i].id,
+          this.newsArray.controls[i].value['updates']
+        )
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.newsArray.controls[i].disable();
+          },
+          (error) => {
+            this.newsArray.controls[i].enable();
+            this.NottificationService.showError(
+              'Something went wrong',
+              'Please try again'
+            );
+          }
+        );
+    }
+  }
+
+  onDelete(i) {
+    this.adminService.deleteUpdate(this.newsList[i].id).subscribe((res) => {
+      console.log(res);
+      this.newsArray.removeAt(i);
+    });
+  }
+
+  onDeleteAll() {
+    this.adminService.deleteAllUpdate().subscribe(
+      (res) => {
+        this.newsArray.clear();
+        this.NottificationService.showSuccess(
+          'All value has been deleted',
+          'Success'
+        );
+      },
+      (error) => {
+        this.NottificationService.showError(
+          'Something went wrong',
+          'Please try again'
+        );
+      }
+    );
+  }
+
+  onAddnews() {
+    this.newsArray.push(
+      new FormGroup({
+        updates: new FormControl(
+          { value: '', disabled: false },
+          Validators.required
+        ),
+      })
+    );
+  }
+
+  initform() {
+    this.newsArray = new FormArray([]);
+
+    this.newsForm = new FormGroup({
+      news: this.newsArray,
+    });
   }
 }

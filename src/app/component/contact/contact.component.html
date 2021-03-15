@@ -14,7 +14,7 @@
             name="name"
             #name="ngModel"
             required
-            minlength=6
+            minlength=2
           />
           <small class="text-danger" *ngIf="name.invalid && name.touched"
             >Invalid Input</small
@@ -40,7 +40,7 @@
             class="input-text"
             style="width: 100%"
             rows="6"
-            minlength="20"
+            minlength="6"
             #message="ngModel"
             ngModel
           ></textarea>

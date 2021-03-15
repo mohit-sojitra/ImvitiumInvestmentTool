@@ -8,16 +8,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EdituserComponent } from './component/edituser/edituser.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AdminComponent } from './admin/admin.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    EdituserComponent,
-    AdminComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, EdituserComponent],
   imports: [
     BrowserModule,
     FormsModule,

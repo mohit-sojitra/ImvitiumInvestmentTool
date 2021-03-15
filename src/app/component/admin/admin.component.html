@@ -39,7 +39,6 @@
                 (ngModelChange)="search()"
                 type="search"
                 name=""
-                id=""
                 placeholder="Search"
                 style="
                   padding-left: 10px;
@@ -66,7 +65,7 @@
                   <td>-</td>
                   <td>
                     <img
-                      src="./../../assets/fountain-pen.svg"
+                      src="./../../assets/fountain-pen-black.svg"
                       alt=""
                       width="20px"
                     />
@@ -132,19 +131,19 @@
                 type="text"
                 name=""
                 id=""
-                value="https://www.youtube.com/watch?v=eDmEPKCNFWI"
+                [(ngModel)]="youtubeLink"
+                class="col-md-12"
                 style="
                   background-color: #85d6dd;
-                  width: 125%;
                   border: none;
                   border-radius: 20px;
-                  padding-left: 10px;
                 "
               />
             </div>
             <div class="col-md-2">
               <button
                 style="border: none; background-color: #394e78; color: black"
+                (click)="updateYoutubeLink()"
               >
                 SUBMIT
               </button>
@@ -152,50 +151,89 @@
           </div>
         </div>
         <hr />
+
         <div class="col-md-12">news and updates</div>
-        <div
-          class="col-md-12"
-          style="
-            color: black;
-            background-color: #85d6dd;
-            margin-left: 15px;
-            margin-right: 40px;
-            padding: 10px;
-            border-radius: 20px;
-            overflow-y: scroll;
-            height: 350px;
-          "
-        >
+        <form class="col-md-12 col-lg-12" [formGroup]="newsForm">
           <div
-            *ngFor="let n of numSequence()"
-            style="padding-left: 10px; padding-top: 5px"
+            class="col-md-12 col-lg-12"
+            style="
+              color: black;
+              background-color: #85d6dd;
+              margin-left: 15px;
+              margin-right: 40px;
+              padding: 10px;
+              border-radius: 20px;
+              overflow-y: scroll;
+              height: 350px;
+              width: 100%;
+            "
+            formArrayName="news"
           >
-          <div class="row">
-            <input
-              type="text"
-              name=""
-              id=""
-              value="This is demo build expect some bugs . Please msg me with them"
-              style="width: 85%; background-color: #72c6ce; border: none"
-            />
-            <button class="news-button">
-            <img
-              src="./../../assets/fountain-pen.svg"
-              alt=""
-              width="18px"
-              style="margin: 2px"
-            /></button>
-            <button class="news-button">
-            <img
-              src="./../../assets/recycle-bin.svg"
-              alt=""
-              width="18px"
-              style="margin: 2px"
-            />
-          </button>
-        </div>
+            <div
+              *ngFor="let n of newsForm.get('news').value; let i = index"
+              style="padding-left: 10px; padding-top: 5px"
+              [formGroupName]="i"
+            >
+              <div class="row">
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  style="width: 85%; background-color: #72c6ce; border: none"
+                  formControlName="updates"
+                />
+                <button class="news-button" (click)="onEdit(i)">
+                  <img
+                    [src]="
+                      this.newsArray.controls[i].disabled
+                        ? './../../assets/fountain-pen-white.svg '
+                        : './../../assets/floppy-disk.svg'
+                    "
+                    alt=""
+                    width="18px"
+                    style="margin: 2px"
+                  />
+                </button>
+                <button class="news-button" (click)="onDelete(i)">
+                  <img
+                    src="./../../assets/recycle-bin-white.svg"
+                    alt=""
+                    width="18px"
+                    style="margin: 2px"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 5px;">
+              <div class="col-md-6"></div>
+              <div class="col-md-3">
+                <button
+                  style="
+                    border: none;
+                    background-color: #394e78;
+                    border-radius: 0px;
+                  "
+                  (click)="onAddnews()"
+                >
+                  Add news
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button
+                  style="
+                    border: none;
+                    background-color: #394e78;
+                    border-radius: 0px;
+                  "
+                  (click)="onDeleteAll()"
+                >
+                  Delete All
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

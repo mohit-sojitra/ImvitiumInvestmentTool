@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
+import { AdminComponent } from './component/admin/admin.component';
 import { EdituserComponent } from './component/edituser/edituser.component';
 
 const routes: Routes = [
@@ -26,11 +26,12 @@ const routes: Routes = [
   },
   {
     path: 'edituser',
-    component: EdituserComponent
+    component: EdituserComponent,
   },
   {
     path: 'admin',
-    component: AdminComponent
+    loadChildren: () =>
+      import('./component/admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: 'feature',
