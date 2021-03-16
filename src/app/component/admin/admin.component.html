@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" >
       <div class="row">
         <div class="col-md-5">users</div>
         <div class="col-md-7" style="padding-bottom: 10px">
@@ -28,10 +28,11 @@
         </div>
         <hr />
         <div
-          class="col-md-12"
+          class="col-md-12 "
+          [ngClass]="{'background': userEditMode}"
           style="background-color: #85d6dd; padding: 15px; border-radius: 20px"
         >
-          <div class="row">
+          <div class="row justify-content-center">
             <div class="col-md-7"></div>
             <div class="col-md-5">
               <input
@@ -49,7 +50,88 @@
                 "
               />
             </div>
-            <div class="col-md-12">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" *ngIf="userEditMode">
+              <div class="hover_bkgr_fricc">
+                <span class="helper"></span>
+                <div>
+                  <div
+                    class="popupCloseButton"
+                    (click)="this.userEditMode = false"
+                  >
+                    &times;
+                  </div>
+                  <div class="row" style="padding: 10%; margin: 0px">
+                    <div
+                      class="col-md-12"
+                      style="font-size: 35px; font-weight: bold"
+                    >
+                      Edit User
+                    </div>
+                    <form
+                      (ngSubmit)="onSubmitEditedUser()"
+                      #UserEditForm="ngForm"
+                      style="width: 100%"
+                    >
+                      <div class="col-md-12" style="font-size: 20px">name</div>
+                      <div class="col-md-12">
+                        <input
+                          type="text"
+                          name=""
+                          class="edituserinput"
+                          ngModel
+                          #name="ngModel"
+                          name="name"
+                        />
+                      </div>
+
+                      <div class="col-md-12" style="font-size: 20px">email</div>
+                      <div class="col-md-12">
+                        <input
+                          type="text"
+                          name=""
+                          id=""
+                          class="edituserinput"
+                          ngModel
+                          #email="ngModel"
+                          name="email"
+                        />
+                      </div>
+                      <div class="col-md-12" style="font-size: 20px">
+                        account type
+                      </div>
+                      <div class="col-md-12">
+                        <select type="text" name="usertype" id="" class="edituserinput" ngModel #usertype="ngModel"> 
+                          <option value="subscribe">subscribe</option>
+                          <option value="unsubscribe">unsubscribe</option>
+                          <option value="free">free</option>
+                        </select>
+                      </div>
+                      <br />
+                      <div class="col-md-12">
+                        <input
+                          type="submit"
+                          name=""
+                          id=""
+                          value="Submit"
+                          style="
+                            background-color: #394e78;
+                            border: none;
+                            border-radius: 20px;
+                            padding-left: 20px;
+                            padding-right: 20px;
+                            color: #ffffff;
+                            font-size: large;
+                          "
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-12 table-div"  >
               <table style="width: 100%; color: black">
                 <tr>
                   <th>USERNAME</th>
@@ -58,17 +140,19 @@
                   <th>RENEW DATE</th>
                   <th></th>
                 </tr>
-                <tr *ngFor="let item of userList">
+                <tr *ngFor="let item of userList; let i = index">
                   <td>{{ item.username }}</td>
                   <td>{{ item.email }}</td>
                   <td>{{ item.account_type }}</td>
                   <td>-</td>
                   <td>
-                    <img
-                      src="./../../assets/fountain-pen-black.svg"
-                      alt=""
-                      width="20px"
-                    />
+                    <a (click)="showDialog(i)">
+                      <img
+                        src="./../../assets/fountain-pen-black.svg"
+                        alt=""
+                        width="20px"
+                      />
+                    </a>
                   </td>
                 </tr>
               </table>
@@ -119,7 +203,7 @@
             "
             class="center"
           >
-            3
+            {{ totalSubscribeUser }}
           </div>
         </div>
         <div class="col-md-4"></div>
@@ -164,13 +248,13 @@
               padding: 10px;
               border-radius: 20px;
               overflow-y: scroll;
-              height: 350px;
+              height: 250px;
               width: 100%;
             "
             formArrayName="news"
           >
             <div
-              *ngFor="let n of newsForm.get('news').value; let i = index"
+              *ngFor="let n of controls; let i = index"
               style="padding-left: 10px; padding-top: 5px"
               [formGroupName]="i"
             >
@@ -186,7 +270,7 @@
                   <img
                     [src]="
                       this.newsArray.controls[i].disabled
-                        ? './../../assets/fountain-pen-white.svg '
+                        ? './../../assets/fountain-pen-black copy.svg'
                         : './../../assets/floppy-disk.svg'
                     "
                     alt=""
@@ -205,7 +289,7 @@
               </div>
             </div>
 
-            <div class="row" style="margin-top: 5px;">
+            <div class="row" style="margin-top: 5px">
               <div class="col-md-6"></div>
               <div class="col-md-3">
                 <button

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactModel } from 'src/app/interfaces/contact.model';
-import { ContactService } from 'src/app/services/contact.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ContactModel } from '../../interfaces/contact.model';
+import { ContactService } from '../../services/contact.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-contact',

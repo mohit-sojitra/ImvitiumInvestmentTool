@@ -71,4 +71,14 @@ export class AdminService {
       link: link,
     });
   }
+
+  getSubsribeUserList(){
+    return this.http.get<number>(environment.baseUrl + '/api/public/api/total');
+  }
+
+  updateUser(id:number,account_type:string){
+    return this.http.put(environment.baseUrl + '/api/public/api/userlist/'+id,{
+      account_type : account_type
+    });
+  }
 }

@@ -1,7 +1,15 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { newsModel } from 'src/app/interfaces/news.model';
-import { NotificationService } from 'src/app/services/notification.service';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NgForm,
+  NgModel,
+  Validators,
+} from '@angular/forms';
+import { newsModel } from './../../interfaces/news.model';
+import { NotificationService } from '../../services/notification.service';
 import { userlist, UserListModel } from '../../interfaces/userlist.model';
 import { AdminService } from '../../services/admin.service';
 
@@ -11,6 +19,10 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  @ViewChild('UserEditForm') UserEditForm: NgForm;
+  userEditMode: boolean = false;
+  editinguser: userlist;
+  totalSubscribeUser: number = 0;
   ind: number = -1;
   newsArray: FormArray;
   newsForm: FormGroup;
@@ -33,10 +45,7 @@ export class AdminComponent implements OnInit {
       console.log(res);
       this.youtubeLink = res;
     });
-    this.adminService.getUserlist(1, '').subscribe((res) => {
-      this.numberOfPages = res.data.last_page;
-      this.userList = res.data.data;
-    });
+    this.getUserlist();
     this.adminService.getUpdates().subscribe((res) => {
       this.newsList = res;
       for (let news of res) {
@@ -49,6 +58,16 @@ export class AdminComponent implements OnInit {
           })
         );
       }
+    });
+    this.adminService.getSubsribeUserList().subscribe((res) => {
+      this.totalSubscribeUser = res;
+    });
+  }
+
+  getUserlist(){
+    this.adminService.getUserlist(1, '').subscribe((res) => {
+      this.numberOfPages = res.data.last_page;
+      this.userList = res.data.data;
     });
   }
 
@@ -161,8 +180,12 @@ export class AdminComponent implements OnInit {
   }
 
   onEdit(i) {
-    // this.ind = i;
+    console.log(this.newsArray.length);
+
+    this.ind = i;
     if (i >= this.newsList.length) {
+      console.log('new');
+
       this.adminService
         .addUpdates(this.newsArray.controls[i].value['updates'])
         .subscribe(
@@ -178,8 +201,10 @@ export class AdminComponent implements OnInit {
           }
         );
     } else if (this.newsArray.controls[i].disabled) {
+      console.log('new edit');
       this.newsArray.controls[i].enable();
     } else {
+      console.log('update save');
       this.adminService
         .updateUpdates(
           this.newsList[i].id,
@@ -226,6 +251,34 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  showDialog(i: number) {
+    this.userEditMode = true;
+    this.editinguser = this.userList[i];
+
+    console.log(this.UserEditForm);
+    setTimeout(() => {
+      this.UserEditForm.form.setValue({
+        name: this.editinguser.name,
+        email: this.editinguser.email,
+        usertype: this.editinguser.account_type
+      });
+    });
+  }
+  onSubmitEditedUser() {
+    console.log(this.UserEditForm);
+    this.adminService.updateUser(this.editinguser.id,this.UserEditForm.value.usertype).subscribe(res=>{
+      console.log(res);
+      this.getUserlist();
+      this.editinguser = null;
+      this.userEditMode = false;
+    },error=>{
+      this.NottificationService.showError(
+        'Something went wrong',
+        'Please try again'
+      );
+    })
+  }
+
   onAddnews() {
     this.newsArray.push(
       new FormGroup({
@@ -235,6 +288,10 @@ export class AdminComponent implements OnInit {
         ),
       })
     );
+  }
+
+  get controls() {
+    return (<FormArray>this.newsForm.get('news')).controls;
   }
 
   initform() {

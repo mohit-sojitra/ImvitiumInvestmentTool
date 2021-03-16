@@ -7,7 +7,7 @@ export interface UserListModel {
 }
 
 export interface userlist {
-  id: string;
+  id: number;
   name: string;
   email: string;
   username: string;
