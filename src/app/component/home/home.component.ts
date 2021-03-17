@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { newsModel } from 'src/app/interfaces/news.model';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  newsList: newsModel[] = [];
+  youtubeLink: any;
+  constructor(private adminService: AdminService,private dom: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.adminService.getYoutubeLink().subscribe((res) => {
+      console.log(res);
+      this.youtubeLink = this.dom.bypassSecurityTrustResourceUrl(res);
+      //this.youtubeLink = 
+    });
+    this.adminService.getUpdates().subscribe((res) => {
+      this.newsList = res;
+    });
   }
+
+
 
 }

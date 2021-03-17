@@ -13,6 +13,7 @@ import { NotificationService } from '../../services/notification.service';
 import { userlist, UserListModel } from '../../interfaces/userlist.model';
 import { AdminService } from '../../services/admin.service';
 
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',

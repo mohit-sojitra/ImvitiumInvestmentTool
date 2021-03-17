@@ -16,18 +16,10 @@ export class AuthService {
   public user = new BehaviorSubject<UserModel>(null);
 
   onRegister(user: UserModel) {
+    console.log(user);
+    
     return this.http
-      .post<UserModel>(environment.baseUrl + '/api/public/api/register1', user)
-      .pipe(
-        catchError(this.handleError),
-        tap((resData) => {
-          // this.NewUser = resData;
-          this.NewUser.email = resData.email;
-          this.NewUser.username = resData.username;
-          this.NewUser.name = resData.name;
-          this.NewUser.id = resData.id;
-        })
-      );
+      .post<UserModel>(environment.baseUrl + '/api/public/api/register1', user);
   }
 
   onLogin(email: string, password: string) {
@@ -45,7 +37,7 @@ export class AuthService {
   handleError(
     handleError: any
   ): import('rxjs').OperatorFunction<UserModel, any> {
-    throw new Error('Method not implemented.');
+    throw new Error("Email or username already registerd");
   }
 
 

@@ -124,34 +124,11 @@
     <div class="col-md-6 col-lg-6 left-bottom-block">
       <h2>UPDATES/NEWS</h2>
       <ul class="list">
-        <li>
+        <li *ngFor="let item of newsList">
           <span
-            >This is a DEMO build. Expect some bugs. Please MSG me with
-            them.</span
+            >{{item.news_update}}</span
           >
-          <strong>01.12.2020</strong>
-        </li>
-        <li>
-          <span>Filings portion NOT completed. Don't select Filings tab.</span>
-          <strong>01.12.2020</strong>
-        </li>
-        <li>
-          <span>Do NOT use Twitter share functionality within Repository.</span>
-          <strong>01.12.2020</strong>
-        </li>
-        <li>
-          <span
-            >Expect up to a 15 minute delay to receive verification email.</span
-          >
-          <strong>01.12.2020</strong>
-        </li>
-        <li>
-          <span>Newest News Add TEST.</span>
-          <strong>01.22.2020</strong>
-        </li>
-        <li>
-          <span>fgtrrttvcvcvv</span>
-          <strong>01.05.2021</strong>
+          <strong>{{item.updated_at.substring(0,10)}}</strong>
         </li>
       </ul>
     </div>
