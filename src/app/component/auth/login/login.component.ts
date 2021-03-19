@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
     this.test=!this.test;
     // console.log('submit');
     this.AuthService.onLogin(loginform.value.email,loginform.value.password).subscribe(res=>{
-      console
       console.log(this.AuthService.getUser());
     },error =>{
       console.log(error);
