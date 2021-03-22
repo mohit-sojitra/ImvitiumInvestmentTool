@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './component/admin/admin.component';
 import { EdituserComponent } from './component/edituser/edituser.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -26,7 +27,9 @@ const routes: Routes = [
   },
   {
     path: 'edituser',
-    component: EdituserComponent,
+    canActivate : [AuthGuard],
+    loadChildren: () =>
+      import('./component/edituser/edituser.module').then((m) => m.EdituserModule),
   },
   {
     path: 'admin',

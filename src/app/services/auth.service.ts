@@ -5,15 +5,14 @@ import { UserModel } from '../interfaces/user.model';
 import { catchError, tap } from 'rxjs/operators';
 import { LoginModel } from '../interfaces/login.model';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
-  NewUser: UserModel = null;
-  private LoggedInUser: LoginModel = null;
-  public user = new BehaviorSubject<UserModel>(null);
+  constructor(private http: HttpClient,private route:Router) {}
+  public LoggedInUser = new BehaviorSubject<LoginModel>(null);
 
   onRegister(user: UserModel) {
     console.log(user);
@@ -33,7 +32,8 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
-          this.LoggedInUser = resData;
+          this.LoggedInUser.next(resData);
+          localStorage.setItem('userData', JSON.stringify(this.LoggedInUser.value));
         })
       );
   }
@@ -56,6 +56,17 @@ export class AuthService {
   }
 
   getUser(): LoginModel {
-    return this.LoggedInUser;
+    return this.LoggedInUser.value;
+  }
+
+  public autoLogin() {
+    const userData: LoginModel = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return;
+    }
+    if (userData.access_token) {
+      this.LoggedInUser.next(userData);
+      this.route.navigate(['/edituser']);
+    }
   }
 }

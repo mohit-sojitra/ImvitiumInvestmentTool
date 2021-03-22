@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../app/services/auth.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { AuthService } from '../../../../app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   test:boolean = true;
-  constructor(private AuthService: AuthService) {}
+  constructor(private AuthService: AuthService,private route:Router) {}
 
   ngOnInit(): void {}
 
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
     // console.log('submit');
     this.AuthService.onLogin(loginform.value.email,loginform.value.password).subscribe(res=>{
       console.log(this.AuthService.getUser());
+      this.route.navigate(['/edituser']);
     },error =>{
       console.log(error);
       alert(error);
