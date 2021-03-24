@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { newsModel } from 'src/app/interfaces/news.model';
-import { AdminService } from 'src/app/services/admin.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { UserService } from 'src/app/services/user.service';
+import { newsModel } from '../../interfaces/news.model';
+import { AdminService } from '../../services/admin.service';
+import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
+import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-edituser',
   templateUrl: './edituser.component.html',

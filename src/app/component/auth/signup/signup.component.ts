@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { NotificationService } from 'src/app/services/notification.service';
+import { NotificationService } from '../../../services/notification.service';
 import { UserModel } from '../../../../app/interfaces/user.model';
 import { AuthService } from '../../../../app/services/auth.service';
 

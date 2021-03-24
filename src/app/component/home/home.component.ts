@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { newsModel } from 'src/app/interfaces/news.model';
-import { AdminService } from 'src/app/services/admin.service';
+import { newsModel } from '../../interfaces/news.model';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-home',
