@@ -21,6 +21,7 @@ import { AdminService } from '../../services/admin.service';
 })
 export class AdminComponent implements OnInit {
   @ViewChild('UserEditForm') UserEditForm: NgForm;
+  isYoutubelinkupdate =  false;
   userEditMode: boolean = false;
   editinguser: userlist;
   totalSubscribeUser: number = 0;
@@ -70,6 +71,9 @@ export class AdminComponent implements OnInit {
       this.numberOfPages = res.data.last_page;
       this.userList = res.data.data;
     });
+  }
+  enableYoutubeButton(){
+    this.isYoutubelinkupdate = true;
   }
 
   updateYoutubeLink() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContactModel } from '../../interfaces/contact.model';
 import { ContactService } from '../../services/contact.service';
 import { NotificationService } from '../../services/notification.service';
@@ -11,7 +12,8 @@ import { NotificationService } from '../../services/notification.service';
 export class ContactComponent implements OnInit {
   constructor(
     private ContactService: ContactService,
-    private NotificationService: NotificationService
+    private NotificationService: NotificationService,
+    private route:Router
   ) {}
 
   ngOnInit(): void {}
@@ -27,6 +29,7 @@ export class ContactComponent implements OnInit {
           'You respoce is recordered!! our team will contact you soon.',
           contact.name
         );
+        this.route.navigate(['/']);
       },
       (error) => {
         this.NotificationService.showError(contact.name, error);
