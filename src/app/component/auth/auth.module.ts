@@ -7,7 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { SharedModule } from 'src/app/shared.module';
+import { SharedModule } from '../../../app/shared.module';
 
 @NgModule({
   declarations: [

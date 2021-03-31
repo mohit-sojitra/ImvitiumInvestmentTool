@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { LoginModel } from 'src/app/interfaces/login.model';
-import { AuthService } from 'src/app/services/auth.service';
+import {  Subscription } from 'rxjs';
+import { AuthService } from '../../../app/services/auth.service';
 
 @Component({
   selector: 'app-header',
