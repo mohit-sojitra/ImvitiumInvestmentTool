@@ -10,6 +10,6 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'ImvitiumInvestmentTool';
   constructor(private authService: AuthService) {
-    //this.authService.autoLogin();
+    this.authService.autoLogin();
   }
 }

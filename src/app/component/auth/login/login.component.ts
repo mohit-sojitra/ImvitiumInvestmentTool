@@ -10,18 +10,25 @@ import { AuthService } from '../../../../app/services/auth.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
-  test:boolean = true;
+  isLoading = false;
   constructor(private AuthService: AuthService,private route:Router) {}
 
   ngOnInit(): void {}
 
   onSubmit(loginform: any) {
-    this.test=!this.test;
     // console.log('submit');
+    this.isLoading = true;
     this.AuthService.onLogin(loginform.value.email,loginform.value.password).subscribe(res=>{
+      this.isLoading = false;
       console.log(this.AuthService.getUser());
-      this.route.navigate(['/edituser']);
+      if(res.register.type === 'admin'){
+        this.route.navigate(['/admin']);  
+      }
+      else {
+        this.route.navigate(['/edituser']);
+      }
     },error =>{
+      this.isLoading = false;
       console.log(error);
       alert(error);
     })

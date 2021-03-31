@@ -1,76 +1,77 @@
-<div class="container">
-  <div class="row">
-    <div
-      class="Mobilelogo"
-      style="margin: auto; width: 50%; "
-    >
-      <a class="nav-link" routerLink="/" routerLinkActive="active">
-        <img src="../../../assets/logo.png" alt="" width="85%"
-      /></a>
-    </div>
-    <div class="col-md-12">
-      <nav
-        class="navbar navbar-expand-lg navbar navbar-dark"
-        style="width: 100%"
-      >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarTogglerDemo01"
-          aria-controls="navbarTogglerDemo01"
-          aria-expanded="true"
-          aria-label="Toggle navigation"
-          style="margin-left: 0%;"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li
-              class="nav-item"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a class="nav-link" [routerLink]="['/about']">ABOUT</a>
-            </li>
-            <li
-              class="nav-item"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a class="nav-link" routerLink="/feature">FEATURES</a>
-            </li>
-            <div style="margin-left: 15%; margin-right: 22%" class="logo">
-              <a class="nav-link" routerLink="/" routerLinkActive="active">
-                <img src="../../../assets/logo.png" alt="" height="100px"
-              /></a>
-            </div>
-            <li
-              class="nav-item"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a class="nav-link" routerLink="/contact">CONTACT</a>
-            </li>
+<nav class="navbar navbar-expand-lg navbar-dark text-center">
+  <button 
+    style="background-color: #452860;" 
+    class="navbar-toggler" 
+    type="button" 
+    (click)="toggleNavbar()"  
+    data-toggle="collapse" 
+    data-target="#navbarTogglerDemo01" 
+    aria-controls="navbarTogglerDemo01" 
+    aria-expanded="false" 
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-            <li
-              class="nav-item"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a class="nav-link" routerLink="/auth/login">LOGIN </a>
-            </li>
-            <li
-              class="nav-item"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a class="nav-link" routerLink="/auth/signup">SIGNUP</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+  <div class="collapse navbar-collapse" [ngClass] ="{'show': navbarOpen}"  [ngStyle]="{'margin-left' : navbarOpen ? '0px' : '30px'}">
+      <ul class=" navbar-nav" (click)="onSelect()">
+        <li 
+        *ngIf="!isLoggedIn"
+          class="nav-item"
+          [ngStyle]="{'margin-right' : navbarOpen ? '0px' : '10px'}">
+          <a 
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLink]="['/about']" >ABOUT</a>
+        </li>
+        <li 
+        *ngIf="!isLoggedIn"
+          class="nav-item">
+          <a 
+            class="nav-link " 
+            routerLinkActive="active"
+            [routerLink]="['/feature']">FEATURES</a>
+        </li>
+      </ul>
   </div>
-</div>
+
+  <div class="navbar-brand mx-auto" *ngIf="!navbarOpen">
+      <img 
+        [routerLink]="['/']"
+        src='assets/logo.png' 
+        class="image-class">    
+  </div>
+  
+  <div class="collapse navbar-collapse" [ngClass] ="{'show': navbarOpen}"  [ngStyle]="{'margin-right' : navbarOpen ? '0px' : '30px'}">
+    <ul class=" navbar-nav ml-auto" (click)="onSelect()">
+      <li 
+      *ngIf="!isLoggedIn"
+        class="nav-item" 
+        [ngStyle]="{'margin-right' : navbarOpen ? '0px' : '70px'}">
+          <a 
+            class="nav-link" 
+            routerLinkActive="active"
+            [routerLink]="['/contact']">CONTACT</a>
+      </li>
+      <li 
+        class="nav-item" 
+        [ngStyle]="{'margin-right' : navbarOpen ? '0px' : '10px'}" >
+        <a 
+          *ngIf="!isLoggedIn"
+          class="nav-link" 
+          routerLinkActive="active"
+          [routerLink]="['/auth/login']">LOGIN</a>
+          <a 
+          *ngIf="isLoggedIn"
+          class="nav-link" 
+          routerLinkActive="active"
+          (click)="logout()">LOG OUT</a>
+      </li>
+      <li class="nav-item" *ngIf="!isLoggedIn">
+        <a 
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLink]="['/auth/signup']">SIGNUP</a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -20,6 +20,7 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  isLoading = false;
   @ViewChild('UserEditForm') UserEditForm: NgForm;
   isYoutubelinkupdate =  false;
   userEditMode: boolean = false;
@@ -43,12 +44,16 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.initform();
+    this.isLoading = true;
     this.adminService.getYoutubeLink().subscribe((res) => {
+      this.isLoading = false;
       console.log(res);
       this.youtubeLink = res;
     });
     this.getUserlist();
+    this.isLoading = true;
     this.adminService.getUpdates().subscribe((res) => {
+      this.isLoading = false;
       this.newsList = res;
       for (let news of res) {
         this.newsArray.push(
@@ -61,13 +66,17 @@ export class AdminComponent implements OnInit {
         );
       }
     });
+    this.isLoading = true;
     this.adminService.getSubsribeUserList().subscribe((res) => {
+      this.isLoading = false;
       this.totalSubscribeUser = res;
     });
   }
 
   getUserlist(){
+    this.isLoading = true;
     this.adminService.getUserlist(1, '').subscribe((res) => {
+      this.isLoading = false;
       this.numberOfPages = res.data.last_page;
       this.userList = res.data.data;
     });
@@ -77,7 +86,9 @@ export class AdminComponent implements OnInit {
   }
 
   updateYoutubeLink() {
+    this.isLoading = true;
     this.adminService.setYoutubeLink(this.youtubeLink).subscribe((res) => {
+      this.isLoading = false;
       console.log(res);
     });
   }
@@ -89,6 +100,7 @@ export class AdminComponent implements OnInit {
   changePage(Pagenumber: number) {
     if (this.accountType === 'all') {
       this.adminService.getUserlist(Pagenumber, '').subscribe((res) => {
+        this.isLoading = false;
         this.currentPage = res.data.current_page;
         this.numberOfPages = res.data.last_page;
         this.userList = res.data.data;
@@ -232,15 +244,19 @@ export class AdminComponent implements OnInit {
   }
 
   onDelete(i) {
+    this.isLoading = true;
     this.adminService.deleteUpdate(this.newsList[i].id).subscribe((res) => {
+      this.isLoading = false;
       console.log(res);
       this.newsArray.removeAt(i);
     });
   }
 
   onDeleteAll() {
+    this.isLoading = true;
     this.adminService.deleteAllUpdate().subscribe(
       (res) => {
+        this.isLoading = false;
         this.newsArray.clear();
         this.NottificationService.showSuccess(
           'All value has been deleted',
@@ -248,7 +264,9 @@ export class AdminComponent implements OnInit {
         );
       },
       (error) => {
+        this.isLoading = false;
         this.NottificationService.showError(
+
           'Something went wrong',
           'Please try again'
         );
@@ -270,13 +288,16 @@ export class AdminComponent implements OnInit {
     });
   }
   onSubmitEditedUser() {
+    this.isLoading = true;
     console.log(this.UserEditForm);
     this.adminService.updateUser(this.editinguser.id,this.UserEditForm.value.usertype).subscribe(res=>{
+      this.isLoading = false;
       console.log(res);
       this.getUserlist();
       this.editinguser = null;
       this.userEditMode = false;
     },error=>{
+      this.isLoading = false;
       this.NottificationService.showError(
         'Something went wrong',
         'Please try again'

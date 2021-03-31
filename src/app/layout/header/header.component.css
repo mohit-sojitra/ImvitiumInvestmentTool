@@ -1,32 +1,22 @@
-#navbar {
-  min-width: 100%;
-}
-
 li {
-  height: fit-content;
   background-color: #394e78;
-  margin: 5%;
   border-radius: 20px;
-  padding: 0px;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding: 3px;
   cursor: pointer;
-  height: fit-content;
 }
 
-a {
-  text-align: center;
+
+
+
+
+.row {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-@media screen and (max-width: 600px) {
-  .logo {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .Mobilelogo {
-    display: none;
-    
-  }
+.image-class {
+  width: 80%;
+  height: 80%;
+  cursor: pointer;
 }

@@ -10,6 +10,7 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent implements OnInit {
+  isLoading = false;
   constructor(
     private ContactService: ContactService,
     private NotificationService: NotificationService,
@@ -18,6 +19,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {}
   onSubmit(ContactForm) {
+    this.isLoading = true;
     var contact: ContactModel = {
       name: ContactForm.value.name,
       email: ContactForm.value.email,
@@ -25,6 +27,7 @@ export class ContactComponent implements OnInit {
     };
     this.ContactService.SubmitContactUs(contact).subscribe(
       (res) => {
+        this.isLoading = false;
         this.NotificationService.showSuccess(
           'You respoce is recordered!! our team will contact you soon.',
           contact.name
@@ -32,6 +35,7 @@ export class ContactComponent implements OnInit {
         this.route.navigate(['/']);
       },
       (error) => {
+        this.isLoading = false;
         this.NotificationService.showError(contact.name, error);
       }
     );

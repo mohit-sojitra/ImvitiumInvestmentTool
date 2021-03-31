@@ -12,6 +12,9 @@ import { AuthService } from '../../../../app/services/auth.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  isLoading = false;
+  
+
   constructor(private http: HttpClient, private AuthService: AuthService,private NotificationService:NotificationService,private route:Router) {}
 
   ngOnInit(): void {}
@@ -25,11 +28,14 @@ export class SignupComponent implements OnInit {
       username: loginForm.value.username,
     };
     console.log(user);
+    this.isLoading = true;
     this.AuthService.onRegister(user).subscribe((res) => {
+      this.isLoading = false;
       console.log(res);
       this.NotificationService.showSuccess('Success',res);
       this.route.navigate(['/auth/login']);
     },error=>{
+      this.isLoading = false;
       this.NotificationService.showError('error','Email or password has been taken')  
     });
   }

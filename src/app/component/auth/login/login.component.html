@@ -1,11 +1,13 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div class="background-div">
 <div class="container ">
-  <div class="row justify-content-center align-items-center">
-    <div id="login-column" class="form-group">
+  <div class="row justify-content-center align-items-center " >
+    <div id="login-column" class="form-group col-md-4">
       <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
-        <div class="row justify-content-center align-items-center h2">
+        <div class="row justify-content-center align-items-center h1 ">
           LOGIN
         </div>
-        name | email <br />
+        username | email <br />
         <input
           type="text"
           class="form-control input-text"
@@ -54,4 +56,5 @@
       </form>
     </div>
   </div>
+</div>
 </div>

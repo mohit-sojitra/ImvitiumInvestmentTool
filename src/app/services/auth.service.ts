@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient,private route:Router) {}
+  constructor(private http: HttpClient, private route: Router) {}
   public LoggedInUser = new BehaviorSubject<LoginModel>(null);
 
   onRegister(user: UserModel) {
@@ -33,7 +33,10 @@ export class AuthService {
         catchError(this.handleError),
         tap((resData) => {
           this.LoggedInUser.next(resData);
-          localStorage.setItem('userData', JSON.stringify(this.LoggedInUser.value));
+          localStorage.setItem(
+            'userData',
+            JSON.stringify(this.LoggedInUser.value)
+          );
         })
       );
   }
@@ -46,7 +49,7 @@ export class AuthService {
 
   changePassword(oldPassword: String, newPassword: String) {
     return this.http.put(
-      environment.baseUrl +'/api/public/api/change_password/' + 48,
+      environment.baseUrl + '/api/public/api/change_password/' + 48,
       {
         id: 48,
         old_password: oldPassword,
@@ -65,8 +68,30 @@ export class AuthService {
       return;
     }
     if (userData.access_token) {
-      this.LoggedInUser.next(userData);
-      this.route.navigate(['/edituser']);
+      if (userData.register.type !== 'admin') {
+        this.LoggedInUser.next(userData);
+        this.route.navigate(['/edituser']);
+      } else {
+        this.LoggedInUser.next(userData);
+        this.route.navigate(['/admin']);
+      }
     }
+  }
+
+  public logOut() {
+    this.http
+      .post(environment.baseUrl + '/api/public/api/logout', {
+        token: this.LoggedInUser.value.access_token,
+      })
+      .subscribe(
+        (res) => {
+          this.LoggedInUser.next(null);
+          localStorage.clear();
+          this.route.navigate(['/']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }

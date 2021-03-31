@@ -1,3 +1,11 @@
 .container{
   color: white;
+  
+}
+.background-div {
+  height: 100%;
+  background-image: url(../../../../assets/img-left.png),url(../../../../assets/img-right.png);
+  background-size: contain,contain;
+  background-repeat: no-repeat,no-repeat;
+  background-position: left,right;
 }

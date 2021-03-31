@@ -7,4 +7,5 @@ export interface UserModel {
   created_at?: string;
   updated_at?: string;
   record_deleted?: string;
+  type: string;
 }
