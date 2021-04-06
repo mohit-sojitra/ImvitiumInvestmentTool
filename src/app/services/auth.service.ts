@@ -14,6 +14,12 @@ export class AuthService {
   constructor(private http: HttpClient, private route: Router) {}
   public LoggedInUser = new BehaviorSubject<LoginModel>(null);
 
+  OnForgetPassword(email: String) {
+    return this.http.post(environment.baseUrl + '/api/api/forgot_password', {
+      email: email,
+    });
+  }
+
   onRegister(user: UserModel) {
     console.log(user);
 
@@ -93,5 +99,14 @@ export class AuthService {
           console.log(error);
         }
       );
+  }
+
+  public verifyToken(token: String) {
+    return this.http.post(
+      environment.baseUrl + '/api/public/api/register1/verify',
+      {
+        token: token,
+      }
+    );
   }
 }

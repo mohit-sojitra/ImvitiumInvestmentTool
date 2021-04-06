@@ -7,14 +7,14 @@ import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { SharedModule } from '../../../app/shared.module';
+import { SharedModule } from '../../core/shared.module';
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
     ForgetPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   imports: [
     SharedModule,
@@ -22,14 +22,15 @@ import { SharedModule } from '../../../app/shared.module';
     FormsModule,
     CommonModule,
     RouterModule.forChild([
-      {
-        path: '',
-        redirectTo: 'login',
-      },
+      // {
+      //   path: '',
+      //   redirectTo: 'login',
+      // },
       {
         path: 'login',
         component: LoginComponent,
       },
+      { path : 'login/:token' , component : LoginComponent},
       {
         path: 'signup',
         component: SignupComponent,

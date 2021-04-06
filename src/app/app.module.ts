@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from './shared.module';
+import { SharedModule } from './core/shared.module';
+import { ApiInterceptor } from './core/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent ],
@@ -19,7 +20,11 @@ import { SharedModule } from './shared.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [{
+    provide:HTTP_INTERCEPTORS ,
+    useClass : ApiInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

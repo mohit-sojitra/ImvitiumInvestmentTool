@@ -20,8 +20,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(loginForm) {
-    let user: UserModel;
-    user = {
+    const user:UserModel = {
       name: loginForm.value.name,
       email: loginForm.value.email,
       password: loginForm.value.password,
@@ -32,7 +31,8 @@ export class SignupComponent implements OnInit {
     this.AuthService.onRegister(user).subscribe((res) => {
       this.isLoading = false;
       console.log(res);
-      this.NotificationService.showSuccess('Success',res);
+      alert("Please verify your email address");
+      this.NotificationService.showSuccess('Success ',res);
       this.route.navigate(['/auth/login']);
     },error=>{
       this.isLoading = false;

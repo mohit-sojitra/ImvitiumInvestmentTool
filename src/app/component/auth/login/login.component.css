@@ -9,3 +9,12 @@
   background-repeat: no-repeat,no-repeat;
   background-position: left,right;
 }
+@media only screen and (max-width: 600px) {
+  .background-div {
+    height: 100%;
+    background-image: url(../../../../assets/img-right.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
+  }
+}

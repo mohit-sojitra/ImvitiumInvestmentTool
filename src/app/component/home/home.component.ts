@@ -22,6 +22,9 @@ export class HomeComponent implements OnInit {
       console.log(res);
       this.youtubeLink = this.dom.bypassSecurityTrustResourceUrl(res);
       //this.youtubeLink = 
+    },error=>{
+      console.log(error);
+      
     });
     this.isLoading = true;
     this.adminService.getUpdates().subscribe((res) => {
