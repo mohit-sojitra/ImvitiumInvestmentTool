@@ -27,14 +27,25 @@ const routes: Routes = [
   },
   {
     path: 'edituser',
-    canActivate : [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./component/edituser/edituser.module').then((m) => m.EdituserModule),
+      import('./component/edituser/edituser.module').then(
+        (m) => m.EdituserModule
+      ),
   },
   {
     path: 'admin',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./component/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'dashboard',
+    // canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./component/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
   },
   {
     path: 'feature',

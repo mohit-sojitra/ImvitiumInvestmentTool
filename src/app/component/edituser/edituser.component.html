@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-5 col-lg-5 col-sm-12 left-block">
       <h1>Account</h1>
-      <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" >
+      <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
         <div class="row">
           <div class="col-lg-6">
             <div class="form-group text-left">
@@ -85,15 +85,17 @@
           </div>
           <div class="col-lg-6 col-sm-6">
             <div class="form-group">
-              <button class="btn" type="button" (click)="loadUser()">CANCEL</button>
+              <button class="btn" type="button" (click)="loadUser()">
+                CANCEL
+              </button>
             </div>
           </div>
           <div class="col-lg-12 col-sm-12">
             <div class="link">
-              <a [routerLink]="['/auth/changepassword']" >
+              <a [routerLink]="['/auth/changepassword']">
                 <u>Change Password?</u>
               </a>
-              <a [routerLink]="['/contact']" >
+              <a [routerLink]="['/contact']">
                 <u>Contact US</u>
               </a>
             </div>
@@ -114,7 +116,14 @@
         </div>
         <div class="col-lg-7 col-sm-6 left-text">
           <div class="form-group">
-            <button class="btn" type="button">LAUNCH</button>
+            <button
+              class="btn"
+              type="button"
+              [routerLink]="['/dashboard']"
+              routerLinkActive="active"
+            >
+              LAUNCH
+            </button>
           </div>
         </div>
       </div>
